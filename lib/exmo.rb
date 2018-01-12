@@ -8,7 +8,7 @@ class Exmo
   end
 
   def currency
-    ApiBase.post(uri('currency'), {pair: 'BTC_USD'})
+    ApiBase.post(uri('currency'))
   end
 
   def order_book
@@ -20,7 +20,7 @@ class Exmo
   end
 
   def pair_settings
-    ApiBase.post(uri('pair_settings'), {pair: 'BTC_USD'})
+    ApiBase.post(uri('pair_settings'))
   end
 
   private
