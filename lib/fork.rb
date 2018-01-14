@@ -16,8 +16,14 @@ class Fork
     pairs.map { |pair| "#{pair.to_s}(#{pair.ask_top}/ #{pair.bid_top})" }.join('->')
   end
 
+  def details
+    pairs.map do |pair|
+      {name: pair.to_s, ask: pair.ask, bid: pair.bid}
+    end
+  end
+
   def to_s
-    "#{way.join('->')}: #{percentage_profit}%"
+    "#{way.join('->')}"
   end
 
   def percentage_profit

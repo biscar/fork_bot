@@ -1,0 +1,22 @@
+<table class="table">
+  <thead class="thead-dark">
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Pair</th>
+    <th scope="col">Ask(покупка)</th>
+    <th scope="col">Bit(продажа)</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <% (details).each do |num, data| %>
+      <tr>
+        <td><%= num %></td>
+        <td><%= data['name'] %></td>
+        <td><%= data['ask'] %></td>
+        <td><%= data['bid'] %></td>>
+      </tr>
+  <% end %>
+
+  </tbody>
+</table>

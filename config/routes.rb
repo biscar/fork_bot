@@ -5,4 +5,7 @@ Rails.application.routes.draw do
 
 
   root 'fork#index'
+
+  get 'fork/find_forks'
+  post 'fork/show_details'
 end

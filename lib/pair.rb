@@ -12,6 +12,14 @@ class Pair
     "#{@numerator.to_s}/#{@denominator.to_s}"
   end
 
+  def ask
+    @ask ||= order_book['ask_top'].to_f
+  end
+
+  def bid
+    @bid ||= order_book['bid_top'].to_f
+  end
+
   def ask_top
     @ask_top ||= order_book['ask_top'].to_f
   end

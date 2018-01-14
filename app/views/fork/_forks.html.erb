@@ -1,0 +1,29 @@
+<table class="table">
+  <thead class="thead-dark">
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Way</th>
+    <th scope="col">Profit</th>
+    <th scope="col">Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <% (forks).each_with_index do |fork, index| %>
+    <tr>
+      <td><%= index %></td>
+      <td><%= fork %></td>
+      <td><%= number_to_percentage(fork.percentage_profit, precision: 2) %></td>
+      <td>
+        <button type="button"
+                data-details="<%= fork.details.to_json.to_s %>"
+                onclick="Fork.show_details()"
+                class="btn btn-link">
+          Details
+        </button>
+      </td>
+    </tr>
+  <% end %>
+
+  </tbody>
+</table>
