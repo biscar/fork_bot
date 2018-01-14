@@ -3,11 +3,12 @@ class ForkFinder
   class << self
 
     def find(curs, pairs, selected_cur, params = {})
-      profit = 1 + (params[:profit].to_f)/100.to_f if params[:profit].present?
-
       forks = []
+      profit = 1 + (params[:profit].to_f)/100.to_f if params[:profit].present?
       g = Graph.new(curs, pairs)
-      paths = g.cicles_paths(selected_cur)
+      paths = exchanges_filter(g.cicles_paths(selected_cur),
+                               params[:exchanges_from].to_i,
+                               params[:exchanges_to].to_i)
 
      # puts "Pathes were found #{paths.count}"
 
@@ -38,7 +39,6 @@ class ForkFinder
         end
       end
 
-
       forks.sort_by!{ |fork| [fork.length, fork.profit] }
 
       #puts "Forks #{forks.count}"
@@ -46,8 +46,20 @@ class ForkFinder
       forks
     end
 
+    private
+
+    def exchanges_filter(paths, from, to)
+      return paths if from.zero? && to.zero?
+
+      paths.select do |ways|
+        if !from.zero? && !to.zero?
+          from <= ways.count && ways.count <= to
+        elsif !from.zero?
+          from <= ways.count
+        elsif !to.zero?
+          ways.count <= to
+        end
+      end
+    end
   end
-
-
-
 end

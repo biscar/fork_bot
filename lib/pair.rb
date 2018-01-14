@@ -12,6 +12,10 @@ class Pair
     "#{@numerator.to_s}/#{@denominator.to_s}"
   end
 
+  def name
+    self.to_s
+  end
+
   def ask
     @ask ||= order_book['ask_top'].to_f
   end
