@@ -2,8 +2,6 @@ class ForkController < ApplicationController
 
   def index
     @currencies = Exmo.new.currency.map { |c| Currency.new(c) }
-
-
   end
 
   def find_forks
@@ -12,8 +10,8 @@ class ForkController < ApplicationController
     selected_cur = find_selected_cur(currencies, params[:currency])
     forks = []
     if selected_cur
-      #selected_pairs = Exmo.new.pair_settings.keys
-      selected_pairs = ["BTC_USD", "BCH_BTC", "BCH_USD", "ETH_BTC", "ETH_USD", "BCH_ETH"]
+      selected_pairs = Exmo.new.pair_settings.keys
+     # selected_pairs = ["BTC_USD", "BCH_BTC", "BCH_USD", "ETH_BTC", "ETH_USD", "BCH_ETH"]
       orders = Exmo.new.order_book(selected_pairs)
       pairs = get_pairs(selected_pairs, orders, currencies)
       forks = ForkFinder.find(currencies, pairs, selected_cur, profit: params[:profit])
