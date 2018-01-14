@@ -2,7 +2,7 @@
 
   <div class="row">
     <form id="currencies" action="/fork/find_forks" data-remote="true">
-      <div class="col-12">
+      <div class="form-group row">
         <% @currencies.each do |cur| %>
             <div class="form-check form-check-inline">
               <%= radio_button_tag('currency', cur.name, false) %>
