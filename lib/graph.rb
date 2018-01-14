@@ -21,5 +21,9 @@ class Graph
 
   end
 
+  def cicles_paths(currency)
+    graph.cycles_with_vertex(currency)
+  end
+
 
 end

@@ -11,8 +11,30 @@ class Exmo
     ApiBase.post(uri('currency'))
   end
 
-  def order_book
-    ApiBase.post(uri('order_book'), {pair: 'BTC_USD'})
+  # {
+  #   "BTC_USD": {
+  #     "ask_quantity": "3",
+  #     "ask_amount": "500",
+  #     "ask_top": "100",
+  #     "bid_quantity": "1",
+  #     "bid_amount": "99",
+  #     "bid_top": "99",
+  #     "ask": [[100,1,100],[200,2,400]],
+  #     "bid": [[99,1,99]]
+  #   }
+  # }
+
+  # ask_quantity - объем всех ордеров на продажу
+  # ask_amount - сумма всех ордеров на продажу
+  # ask_top - минимальная цена продажи
+  # bid_quantity - объем всех ордеров на покупку
+  # bid_amount - сумма всех ордеров на покупку
+  # bid_top - максимальная цена покупки
+  # bid - список ордеров на покупку, где каждая строка это цена, количество и сумма
+  # ask - список ордеров на продажу, где каждая строка это цена, количество и сумма
+
+  def order_book(pairs)
+    ApiBase.post(uri('order_book'), {pair: pairs.join(',')})
   end
 
   def ticker

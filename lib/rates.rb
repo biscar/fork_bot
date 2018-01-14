@@ -12,13 +12,16 @@ class Rates
     private
 
     def detect_rate(pairs, from_cur, to_cur)
-      direct_cur =  pairs.detect { |pair| pair.numerator == from_cur && pair.denominator == to_cur }
-      undirect_cur = pairs.detect { |pair| pair.denominator == from_cur && pair.numerator == to_cur } unless direct_cur
+      direct_pair = pairs.detect { |pair| pair.numerator == from_cur && pair.denominator == to_cur }
+      undirect_pair = pairs.detect { |pair| pair.denominator == from_cur && pair.numerator == to_cur } unless direct_pair
 
-      if direct_cur
-        direct_cur.rate
-      elsif undirect_cur
-        1/undirect_cur.rate
+      #puts "Pair: #{direct_pair || undirect_pair}"
+       if direct_pair
+       # puts "ask top: #{direct_pair.ask_top}"
+        [direct_pair.ask_top, direct_pair]
+      elsif undirect_pair
+        #puts "bit top: #{undirect_pair.bid_top}"
+        [1/undirect_pair.bid_top, undirect_pair]
       end
     end
 
