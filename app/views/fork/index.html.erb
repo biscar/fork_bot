@@ -11,7 +11,7 @@
                   <% from, to =  pair.split('_') %>
                   <div class="form-check form-check-inline">
                     <%= check_box_tag('pairs[]', pair, true, class: "#{from} #{to}") %>
-                    <%= label_tag(pair, pair) %>
+                    <%= label_tag(pair, pair, class: 'badge badge-secondary') %>
                   </div>
               <% end %>
             </div>
@@ -23,7 +23,7 @@
         <% @currencies.each do |cur| %>
             <div class="form-check form-check-inline">
               <%= check_box_tag('currencies[]', cur.name, true) %>
-              <%= label_tag(cur.name, cur.name) %>
+              <%= label_tag(cur.name, cur.name, class: 'badge badge-info') %>
             </div>
         <% end %>
       </div>
@@ -33,7 +33,7 @@
         <% @currencies.each do |cur| %>
             <div class="form-check form-check-inline">
               <%= radio_button_tag('currency', cur.name, false) %>
-              <%= label_tag(cur.name, cur.name) %>
+              <%= label_tag(cur.name, cur.name, class: 'badge badge-success') %>
             </div>
         <% end %>
       </div>
