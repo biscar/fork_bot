@@ -22,9 +22,7 @@ class ForkFinder
             rate, pair = Rates.find_rate(pairs, last_cur, cur)
             path_pairs << pair
 
-            result = result*rate
-
-            result = result - result*0.002
+            result = result*rate*0.998
           end
 
           last_cur = cur

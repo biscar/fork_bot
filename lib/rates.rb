@@ -18,10 +18,10 @@ class Rates
       #puts "Pair: #{direct_pair || undirect_pair}"
        if direct_pair
        # puts "ask top: #{direct_pair.ask_top}"
-        [direct_pair.ask_top, direct_pair]
+        [direct_pair.bid_top, direct_pair]
       elsif undirect_pair
         #puts "bit top: #{undirect_pair.bid_top}"
-        [1/undirect_pair.bid_top, undirect_pair]
+        [1/undirect_pair.ask_top, undirect_pair]
       end
     end
 
