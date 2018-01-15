@@ -37,7 +37,7 @@ class ForkFinder
         end
       end
 
-      forks.sort_by!{ |fork| [fork.length, fork.profit] }
+      forks.sort_by!{ |fork| fork.profit }.reverse!
 
       #puts "Forks #{forks.count}"
 

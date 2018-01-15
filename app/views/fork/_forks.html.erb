@@ -13,7 +13,7 @@
     <tr>
       <td><%= index %></td>
       <td><%= fork %></td>
-      <td><%= number_to_percentage(fork.percentage_profit, precision: 2) %></td>
+      <td><%= number_to_percentage(fork.percentage_profit) %></td>
       <td>
         <button type="button"
                 data-details="<%= fork.details.to_json.to_s %>"

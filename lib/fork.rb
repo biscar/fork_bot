@@ -27,7 +27,7 @@ class Fork
   end
 
   def percentage_profit
-    ((profit - 1) * 100).round(2)
+    ((profit - 1) * 100).round(10)
   end
 
 end
