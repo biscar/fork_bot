@@ -6,7 +6,7 @@
         <%= label_tag('Selected Pairs', 'Selected Pairs:  ', class: 'font-weight-bold') %>
         <% @pairs.group_by {|s| s.split('_').first }.each do |currency, pairs| %>
             <div class="form-group">
-              <%= label_tag(currency, currency + ':  ', class: 'font-weight-bold col-sm-2 col-form-label') %>
+              <%= label_tag(currency, currency + ':  ', class: 'font-weight-bold col-sm-2 col-form-label badge badge-light') %>
               <% pairs.each do |pair| %>
                   <% from, to =  pair.split('_') %>
                   <div class="form-check form-check-inline">
