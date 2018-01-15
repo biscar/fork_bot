@@ -31,7 +31,7 @@ class ForkFinder
         #puts "#{str}:#{result.round(5)}" if result > 1.0
 
         if profit
-          forks << Fork.new(path, result, path_pairs) if result > profit
+          forks << Fork.new(path, result, path_pairs) if result >= profit
         else
           forks << Fork.new(path, result, path_pairs)
         end
