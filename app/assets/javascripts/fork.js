@@ -16,6 +16,11 @@
 
   Fork.refresh_fork = function() {
     var fork = $(event.target).parents('tr');
+    fork.addClass('disabledContent');
+    $('#details table').addClass('disabledContent');
+
+    $('button', fork).data('disabled', true);
+
     var details = fork.data('details');
     var id = fork.attr('id');
 
