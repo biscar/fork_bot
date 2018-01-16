@@ -33,8 +33,8 @@ class Exmo
   # bid - список ордеров на покупку, где каждая строка это цена, количество и сумма
   # ask - список ордеров на продажу, где каждая строка это цена, количество и сумма
 
-  def order_book(pairs)
-    ApiBase.post(uri('order_book'), {pair: pairs.join(',')})
+  def order_book(pairs, params={})
+    ApiBase.post(uri('order_book'), {pair: pairs.join(',')}.merge(params))
   end
 
   def ticker

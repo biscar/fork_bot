@@ -1,12 +1,13 @@
 class ForkFinder
 
-  attr_reader :commission, :profit_percent, :exchanges_from, :exchanges_to
+  attr_reader :commission, :profit_percent, :exchanges_from, :exchanges_to, :limit
 
   def initialize(params = {})
     @commission = params[:commission].to_f
     @profit_percent = params[:profit_percent]
     @exchanges_from = params[:exchanges_from].to_i
     @exchanges_to = params[:exchanges_to].to_i
+    @limit = params[:limit].to_i
   end
 
 
@@ -39,7 +40,7 @@ class ForkFinder
 
     forks.sort_by!{ |fork| fork.profit }.reverse!
 
-    forks
+    limit.zero? ? forks : forks.take(limit)
   end
 
   def recalc(path, pairs)

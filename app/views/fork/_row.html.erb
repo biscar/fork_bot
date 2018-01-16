@@ -1,4 +1,5 @@
-<tr id="<%= id %>" class="fork" data-details="<%= fork.details.to_json.to_s %>" >
+<tr id="<%= id %>" class="fork" data-details="<%= fork.details.to_json.to_s %>"
+    data-way="<%= fork.way.to_json.to_s %>">
     <td><%= id %></td>
     <td><%= fork %></td>
     <td class="<%= profit_color_class(fork.percentage_profit) %>">

@@ -12,12 +12,13 @@ class ExmoController < ForkController
 
     if selected_cur
       selected_pairs = params[:pairs]
-      orders = Exmo.new.order_book(selected_pairs)
+      orders = Exmo.new.order_book(selected_pairs, limit: 1)
       pairs = get_pairs(selected_pairs, orders, currencies)
       graph = Graph.new(currencies, pairs)
       forkFinder = ForkFinder.new(commission: 0.2,
                                   profit_percent: params[:profit],
                                   exchanges_from: params[:exchanges_from],
+                                  limit: params[:limit],
                                   exchanges_to: params[:exchanges_to])
 
       forks = forkFinder.find(graph.cicles_paths(selected_cur), pairs, selected_cur)
@@ -34,15 +35,15 @@ class ExmoController < ForkController
 
   def refresh_fork
     fork_pairs = get_fork_pairs(params[:details].to_hash)
-    currencies = fork_pairs.join('_').split('_').uniq.map { |c| Currency.new(c) }
-    selected_cur = currencies.first
-    path = currencies << selected_cur
-    orders = Exmo.new.order_book(fork_pairs)
+    way = params[:way].to_hash.values.map { |w| w['name'] }
+    currencies = way.uniq.map { |c| Currency.new(c) }
+    way = way.map { |name| find_selected_cur(currencies, name) }
+
+    orders = Exmo.new.order_book(fork_pairs, limit: 1)
     pairs = get_pairs(fork_pairs, orders, currencies)
+
     forkFinder = ForkFinder.new(commission: 0.2)
-
-
-    fork = forkFinder.recalc(path, pairs)
+    fork = forkFinder.recalc(way, pairs)
 
     render partial: 'fork/row', locals: {fork: fork, id: params[:id]}, layout: false
   end
@@ -50,7 +51,7 @@ class ExmoController < ForkController
   private
 
   def find_selected_cur(currencies, name)
-    currencies.detect { |c| c.name == name}
+    currencies.detect { |c| c.name == name }
   end
 
   def get_pairs(selected_pairs, orders, currencies)

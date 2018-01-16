@@ -13,21 +13,21 @@
     });
   };
 
-
   Fork.refresh_fork = function() {
     var fork = $(event.target).parents('tr');
     fork.addClass('disabledContent');
     $('#details table').addClass('disabledContent');
 
-    $('button', fork).data('disabled', true);
+    $('button', fork).prop('disabled', true);
 
     var details = fork.data('details');
+    var way = fork.data('way');
     var id = fork.attr('id');
 
     $.ajax({
       type: "POST",
       url: '/exmo/refresh_fork',
-      data: {details: details, id: id}
+      data: {details: details, id: id, way: way}
     }).success(function(html){
       fork.replaceWith(html);
 
