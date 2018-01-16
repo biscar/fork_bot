@@ -4,6 +4,5 @@ class ForkController < ApplicationController
 
   end
 
-  private
 
 end

@@ -1,5 +1,4 @@
-class ExmoController < ApplicationController
-
+class ExmoController < ForkController
 
   def index
     @currencies = Exmo.new.currency.map { |c| Currency.new(c) }
