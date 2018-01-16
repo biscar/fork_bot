@@ -1,8 +1,6 @@
-
-
 <div class="container-fluid m-3">
   <div class="row">
-    <form id="currencies" action="/fork/find_forks" data-remote="true">
+    <form id="currencies" action="/exmo/find_forks" data-remote="true">
       <div id="pairs" class="form-group">
         <%= label_tag('Selected Pairs', 'Selected Pairs:  ', class: 'font-weight-bold') %>
         <% @pairs.group_by {|s| s.split('_').first }.each do |currency, pairs| %>
@@ -54,7 +52,6 @@
       <button type="submit" class="btn btn-primary">Scan</button>
     </form>
   </div>
-
 
   <div class="row mt-5">
     <div id="forks" class="col-md-6">
