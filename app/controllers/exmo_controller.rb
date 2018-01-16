@@ -14,9 +14,14 @@ class ExmoController < ForkController
       selected_pairs = params[:pairs]
       orders = Exmo.new.order_book(selected_pairs)
       pairs = get_pairs(selected_pairs, orders, currencies)
-      forks = ForkFinder.find(currencies, pairs, selected_cur, profit: params[:profit],
-                              exchanges_from: params[:exchanges_from],
-                              exchanges_to: params[:exchanges_to])
+      graph = Graph.new(currencies, pairs)
+
+      forkFinder = ForkFinder.new(commission: 0.2,
+                                  profit_percent: params[:profit],
+                                  exchanges_from: params[:exchanges_from],
+                                  exchanges_to: params[:exchanges_to])
+
+      forks = forkFinder.find(graph, pairs, selected_cur)
     end
 
     render partial: 'fork/forks', locals: {forks: forks}, layout: false

@@ -1,63 +1,73 @@
 class ForkFinder
 
-  class << self
+  attr_reader :commission, :profit_percent, :exchanges_from, :exchanges_to
 
-    def find(curs, pairs, selected_cur, params = {})
-      forks = []
-      profit = 1 + (params[:profit].to_f)/100.to_f if params[:profit].present?
-      g = Graph.new(curs, pairs)
-      paths = exchanges_filter(g.cicles_paths(selected_cur),
-                               params[:exchanges_from].to_i,
-                               params[:exchanges_to].to_i)
+  def initialize(params = {})
+    @commission = params[:commission].to_f
+    @profit_percent = params[:profit_percent]
+    @exchanges_from = params[:exchanges_from].to_i
+    @exchanges_to = params[:exchanges_to].to_i
+  end
 
-     # puts "Pathes were found #{paths.count}"
 
-      paths.each do |path|
-        result = 1.to_f;
-        last_cur = nil
-        path.unshift(selected_cur)
-        path_pairs = []
-        path.each do |cur|
-          if last_cur && cur
-            rate, pair = Rates.find_rate(pairs, last_cur, cur)
-            path_pairs << pair
+  def find(graph, pairs, selected_cur)
+    forks = []
 
-            result = result*rate*0.998
-          end
+    paths = exchanges_filter(graph.cicles_paths(selected_cur))
 
-          last_cur = cur
+    paths.each do |path|
+      result = 1.to_f
+      last_cur = nil
+      path.unshift(selected_cur)
+      path_pairs = []
+      path.each do |cur|
+        if last_cur && cur
+          rate, pair = Rates.find_rate(pairs, last_cur, cur)
+          path_pairs << pair
+
+          result = result*rate*fee
         end
 
-        #puts "#{str}:#{result.round(5)}" if result > 1.0
-
-        if profit
-          forks << Fork.new(path, result, path_pairs) if result >= profit
-        else
-          forks << Fork.new(path, result, path_pairs)
-        end
+        last_cur = cur
       end
 
-      forks.sort_by!{ |fork| fork.profit }.reverse!
-
-      #puts "Forks #{forks.count}"
-
-      forks
+      if profit
+        forks << Fork.new(path, result, path_pairs) if result >= profit
+      else
+        forks << Fork.new(path, result, path_pairs)
+      end
     end
 
-    private
+    forks.sort_by!{ |fork| fork.profit }.reverse!
 
-    def exchanges_filter(paths, from, to)
-      return paths if from.zero? && to.zero?
+    forks
+  end
 
-      paths.select do |ways|
-        if !from.zero? && !to.zero?
-          from <= ways.count && ways.count <= to
-        elsif !from.zero?
-          from <= ways.count
-        elsif !to.zero?
-          ways.count <= to
-        end
+  private
+
+  def exchanges_filter(paths)
+    return paths if exchanges_from.zero? && exchanges_to.zero?
+
+    paths.select do |ways|
+      if !exchanges_from.zero? && !exchanges_to.zero?
+        exchanges_from <= ways.count && ways.count <= exchanges_to
+      elsif !exchanges_from.zero?
+        exchanges_from <= ways.count
+      elsif !exchanges_to.zero?
+        ways.count <= exchanges_to
       end
     end
   end
+
+  def fee
+    @fee ||= (100 - commission)/100
+  end
+
+  def profit
+    @profit ||= (
+     1 + (profit_percent.to_f)/100.to_f
+    ) if profit_percent.present?
+  end
+
+
 end
