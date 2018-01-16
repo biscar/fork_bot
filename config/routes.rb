@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'exmo/index'
+
   get 'fork/index'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -8,4 +10,6 @@ Rails.application.routes.draw do
 
   get 'fork/find_forks'
   post 'fork/show_details'
+  get 'exmo/find_forks'
+  post 'exmo/show_details'
 end

@@ -5,7 +5,7 @@
 
     $.ajax({
       type: "POST",
-      url: '/fork/show_details',
+      url: '/exmo/show_details',
       data: {details: details}
     }).success(function(html){
       $('#details').html(html);
@@ -20,7 +20,7 @@
       var valuesToSubmit = $(this).serialize();
       $.ajax({
         type: "GET",
-        url: '/fork/find_forks',
+        url: '/exmo/find_forks',
         data: valuesToSubmit
       }).success(function(html){
         $('#forks').html(html);
@@ -35,7 +35,7 @@
       var cur = $(this).val();
       var checked = $(this).prop('checked');
 
-      $( '#pairs .' + cur).prop('checked', checked);
+      $('#pairs .' + cur).prop('checked', checked);
     });
 
 
