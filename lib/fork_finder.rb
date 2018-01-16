@@ -10,10 +10,9 @@ class ForkFinder
   end
 
 
-  def find(graph, pairs, selected_cur)
+  def find(paths, pairs, selected_cur)
     forks = []
-
-    paths = exchanges_filter(graph.cicles_paths(selected_cur))
+    paths = exchanges_filter(paths)
 
     paths.each do |path|
       result = 1.to_f
