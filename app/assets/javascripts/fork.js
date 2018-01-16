@@ -41,7 +41,6 @@
     });
   };
 
-
   $(function() {
     $('#currencies').submit(function() {
       $('#currencies button').prop('disabled', true);
@@ -61,14 +60,12 @@
       return false;
     });
 
-
     $("#selected_currencies input").change(function() {
       var cur = $(this).val();
       var checked = $(this).prop('checked');
 
       $('#pairs .' + cur).prop('checked', checked);
     });
-
 
   });
 

@@ -18,7 +18,7 @@ class Rates
       if direct_pair
         [direct_pair.bid_top, direct_pair]
       elsif undirect_pair
-        [1/undirect_pair.ask_top, undirect_pair]
+        [(1/undirect_pair.ask_top).round(8), undirect_pair]
       end
     end
 

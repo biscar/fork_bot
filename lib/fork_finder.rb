@@ -25,7 +25,7 @@ class ForkFinder
           rate, pair = Rates.find_rate(pairs, last_cur, cur)
           path_pairs << pair
 
-          result = result*rate*fee
+          result = (result*rate*fee).round(8)
         end
 
         last_cur = cur
@@ -53,7 +53,7 @@ class ForkFinder
         rate, pair = Rates.find_rate(pairs, last_cur, cur)
         path_pairs << pair
 
-        result = result*rate*fee
+        result = (result*rate*fee).round(8)
       end
 
       last_cur = cur
