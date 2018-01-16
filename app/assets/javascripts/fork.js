@@ -45,6 +45,8 @@
   $(function() {
     $('#currencies').submit(function() {
       $('#currencies button').prop('disabled', true);
+      $('#forks table').addClass('disabledContent');
+      $('#details table').html('');
 
       var valuesToSubmit = $(this).serialize();
       $.ajax({
