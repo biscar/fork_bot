@@ -10,19 +10,7 @@
   <tbody>
 
   <% (forks).each_with_index do |fork, index| %>
-    <tr>
-      <td><%= index %></td>
-      <td><%= fork %></td>
-      <td><%= number_to_percentage(fork.percentage_profit) %></td>
-      <td>
-        <button type="button"
-                data-details="<%= fork.details.to_json.to_s %>"
-                onclick="Fork.show_details()"
-                class="btn btn-link">
-          Details
-        </button>
-      </td>
-    </tr>
+    <%= render partial: 'fork/row', locals: {id: index, fork: fork} %>
   <% end %>
 
   </tbody>

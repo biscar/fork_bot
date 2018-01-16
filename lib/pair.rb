@@ -16,6 +16,10 @@ class Pair
     self.to_s
   end
 
+  def api_name
+    self.to_s.gsub('/', '_')
+  end
+
   def ask
     @ask ||= order_book['ask_top'].to_f
   end

@@ -33,6 +33,21 @@ class ExmoController < ForkController
     render partial: 'fork/details', locals: {details: details}, layout: false
   end
 
+  def refresh_fork
+    fork_pairs = get_fork_pairs(params[:details].to_hash)
+    currencies = fork_pairs.join('_').split('_').uniq.map { |c| Currency.new(c) }
+    selected_cur = currencies.first
+    path = currencies << selected_cur
+    orders = Exmo.new.order_book(fork_pairs)
+    pairs = get_pairs(fork_pairs, orders, currencies)
+    forkFinder = ForkFinder.new(commission: 0.2)
+
+
+    fork = forkFinder.recalc(path, pairs)
+
+    render partial: 'fork/row', locals: {fork: fork, id: params[:id]}, layout: false
+  end
+
   private
 
   def find_selected_cur(currencies, name)
@@ -55,6 +70,10 @@ class ExmoController < ForkController
     end
 
     pairs
+  end
+
+  def get_fork_pairs(details)
+    details.values.map { |p| p['name'].gsub!('/', '_') }.uniq
   end
 
 end

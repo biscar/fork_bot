@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   post 'fork/show_details'
   get 'exmo/find_forks'
   post 'exmo/show_details'
+  post 'exmo/refresh_fork'
 end

@@ -43,6 +43,25 @@ class ForkFinder
     forks
   end
 
+  def recalc(path, pairs)
+    result = 1.to_f
+    last_cur = nil
+    path_pairs = []
+
+    path.each do |cur|
+      if last_cur && cur
+        rate, pair = Rates.find_rate(pairs, last_cur, cur)
+        path_pairs << pair
+
+        result = result*rate*fee
+      end
+
+      last_cur = cur
+    end
+
+    Fork.new(path, result, path_pairs)
+  end
+
   private
 
   def exchanges_filter(paths)

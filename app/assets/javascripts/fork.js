@@ -1,7 +1,8 @@
 ( function(Fork, $) {
 
   Fork.show_details = function() {
-    var details = $(event.target).data('details');
+    var fork = $(event.target).parents('tr');
+    var details = fork.data('details');
 
     $.ajax({
       type: "POST",
@@ -9,6 +10,29 @@
       data: {details: details}
     }).success(function(html){
       $('#details').html(html);
+    });
+  };
+
+
+  Fork.refresh_fork = function() {
+    var fork = $(event.target).parents('tr');
+    var details = fork.data('details');
+    var id = fork.attr('id');
+
+    $.ajax({
+      type: "POST",
+      url: '/exmo/refresh_fork',
+      data: {details: details, id: id}
+    }).success(function(html){
+      fork.replaceWith(html);
+
+      $.ajax({
+        type: "POST",
+        url: '/exmo/show_details',
+        data: {details: fork.data('details')}
+      }).success(function(html){
+        $('#details').html(html);
+      });
     });
   };
 
