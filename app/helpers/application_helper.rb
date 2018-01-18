@@ -11,4 +11,8 @@ module ApplicationHelper
 
   end
 
+  def profit_to_percent(profit)
+    ((profit - 1) * 100).round(10)
+  end
+
 end
