@@ -30,4 +30,8 @@ class Fork
     ((profit - 1) * 100).round(10)
   end
 
+  def cycle?
+    @cicle ||= way.first == way.last
+  end
+
 end

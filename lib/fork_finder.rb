@@ -1,6 +1,6 @@
 class ForkFinder
 
-  attr_reader :commission, :profit_percent, :exchanges_from, :exchanges_to, :limit
+  attr_reader :commission, :profit_percent, :exchanges_from, :exchanges_to, :limit, :pairs
 
   def initialize(params = {})
     @commission = params[:commission].to_f
@@ -8,33 +8,21 @@ class ForkFinder
     @exchanges_from = params[:exchanges_from].to_i
     @exchanges_to = params[:exchanges_to].to_i
     @limit = params[:limit].to_i
+    @pairs = params[:pairs]
   end
 
 
-  def find(paths, pairs, selected_cur)
+  def find(ways)
     forks = []
-    paths = exchanges_filter(paths)
+    ways = exchanges_filter(ways)
 
-    paths.each do |path|
-      result = 1.to_f
-      last_cur = nil
-      path.unshift(selected_cur)
-      path_pairs = []
-      path.each do |cur|
-        if last_cur && cur
-          rate, pair = Rates.find_rate(pairs, last_cur, cur)
-          path_pairs << pair
-
-          result = (result*rate*fee).round(8)
-        end
-
-        last_cur = cur
-      end
+    ways.each do |way|
+      result, path_pairs = calc_way(way)
 
       if profit
-        forks << Fork.new(path, result, path_pairs) if result >= profit
+        forks << Fork.new(way, result, path_pairs) if result >= profit
       else
-        forks << Fork.new(path, result, path_pairs)
+        forks << Fork.new(way, result, path_pairs)
       end
     end
 
@@ -43,12 +31,20 @@ class ForkFinder
     limit.zero? ? forks : forks.take(limit)
   end
 
-  def recalc(path, pairs)
-    result = 1.to_f
+  def recalc(way)
+    result, path_pairs = calc_way(way)
+
+    Fork.new(way, result, path_pairs)
+  end
+
+  private
+
+  def calc_way(way)
+    result = 1.0
     last_cur = nil
     path_pairs = []
 
-    path.each do |cur|
+    way.each do |cur|
       if last_cur && cur
         rate, pair = Rates.find_rate(pairs, last_cur, cur)
         path_pairs << pair
@@ -59,10 +55,8 @@ class ForkFinder
       last_cur = cur
     end
 
-    Fork.new(path, result, path_pairs)
+    [result, path_pairs]
   end
-
-  private
 
   def exchanges_filter(paths)
     return paths if exchanges_from.zero? && exchanges_to.zero?

@@ -1,9 +1,11 @@
+require 'best_way'
 require 'rgl/bellman_ford'
 require 'rgl/adjacency'
 require 'rgl/dijkstra'
 require 'rgl/dot'
 require 'rgl/edmonds_karp'
 require 'rgl/bipartite'
+
 
 class Graph
 
@@ -21,9 +23,14 @@ class Graph
 
   end
 
-  def cicles_paths(currency)
-    graph.cycles_with_vertex(currency)
+  def ways(start_currency, finish_currency = start_currency)
+    if start_currency == finish_currency
+      ways = graph.cycles_with_vertex(start_currency)
+      ways.each { |w| w.unshift(start_currency)}
+      ways
+    else
+      graph.best_ways(start_currency, finish_currency)
+    end
   end
-
 
 end
