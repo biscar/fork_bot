@@ -24,6 +24,8 @@ class Graph
   end
 
   def ways(start_currency, finish_currency = start_currency)
+    return [] unless start_currency
+
     if start_currency == finish_currency
       ways = graph.cycles_with_vertex(start_currency)
       ways.each { |w| w.unshift(start_currency)}
