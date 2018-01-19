@@ -36,6 +36,54 @@ class Pair
     @bid_top ||= order_book['bid_top'].to_f
   end
 
+
+  def calc_bid_coins(coins, fee)
+    rest = coins
+
+    order_book['bid'].each do |cost,_, total_to|
+      cost = cost.to_f
+      total_to = total_to.to_f
+
+      if total_to >= coins
+        coins = (coins*cost*fee).round(8)
+        rest = 0
+      else
+        coins = (total_to*cost*fee).round(8)
+        rest = coins - total_to
+      end
+
+      if rest <= 0
+        break
+      end
+    end
+
+    rest <= 0 ? coins : nil
+  end
+
+  def calc_ask_coins(coins, fee)
+    rest = coins
+
+    order_book['ask'].each do |cost,_, total_to|
+      cost = cost.to_f
+      total_to = total_to.to_f
+
+      if total_to >= coins
+        coins = ((coins/cost)*fee).round(8)
+        rest = 0
+      else
+        coins = ((total_to/cost)*fee).round(8)
+        rest = coins - total_to
+      end
+
+      if rest <= 0
+        break
+      end
+    end
+
+    rest <= 0 ? coins : nil
+  end
+
+
   class << self
     def split(pair)
       pair.split(/\/|_/)

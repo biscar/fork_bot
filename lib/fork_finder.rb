@@ -12,12 +12,15 @@ class ForkFinder
   end
 
 
-  def find(ways)
+  def find(ways, params = {})
     forks = []
+    coins = params[:coins].to_f
     ways = exchanges_filter(ways)
 
     ways.each do |way|
-      result, path_pairs = calc_way(way)
+      result, path_pairs = calc_way(way, coins)
+
+      next unless result
 
       if profit
         forks << Fork.new(way, result, path_pairs) if result >= profit
@@ -31,25 +34,37 @@ class ForkFinder
     limit.zero? ? forks : forks.take(limit)
   end
 
-  def recalc(way)
-    result, path_pairs = calc_way(way)
+  def recalc(way, params = {})
+    coins = params[:coins].to_f
+
+    result, path_pairs = calc_way(way, coins)
 
     Fork.new(way, result, path_pairs)
   end
 
   private
 
-  def calc_way(way)
+  def calc_way(way, coins)
     result = 1.0
     last_cur = nil
     path_pairs = []
+    current_coins = coins.dup
 
     way.each do |cur|
       if last_cur && cur
-        rate, pair = Rates.find_rate(pairs, last_cur, cur)
-        path_pairs << pair
+        if coins.zero?
+          rate, pair = Rates.find_rate(pairs, last_cur, cur)
+          path_pairs << pair
 
-        result = (result*rate*fee).round(8)
+          result = (result*rate*fee).round(8)
+        else
+          current_coins, pair = Rates.find_scope_coins(pairs, last_cur, cur, current_coins, fee)
+          path_pairs << pair
+
+          puts "#{current_coins} - #{cur}"
+
+          return [nil, nil] unless current_coins
+        end
       end
 
       last_cur = cur

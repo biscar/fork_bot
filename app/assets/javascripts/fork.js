@@ -23,11 +23,12 @@
     var details = fork.data('details');
     var way = fork.data('way');
     var id = fork.attr('id');
+    var coins = $('#coins').val();
 
     $.ajax({
       type: "POST",
       url: '/exmo/refresh_fork',
-      data: {details: details, id: id, way: way}
+      data: {details: details, id: id, way: way, coins: coins}
     }).success(function(html){
       fork.replaceWith(html);
 
