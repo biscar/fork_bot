@@ -3,13 +3,12 @@
     <form id="currencies" action="/exmo/find_forks" data-remote="true">
       <div id="pairs" class="form-group">
         <%= label_tag('Selected Pairs', 'Selected Pairs:  ', class: 'font-weight-bold') %>
-        <% @pairs.group_by {|s| s.split('_').first }.each do |currency, pairs| %>
+        <% @pairs.group_by(&:numerator).each do |currency, pairs| %>
             <div class="form-group">
-              <%= label_tag(currency, currency + ':  ', class: 'font-weight-bold col-sm-2 col-form-label badge badge-light') %>
+              <%= label_tag(currency, currency.to_s + ':  ', class: 'font-weight-bold col-sm-2 col-form-label badge badge-light') %>
               <% pairs.each do |pair| %>
-                  <% from, to =  pair.split('_') %>
                   <div class="form-check form-check-inline">
-                    <%= check_box_tag('pairs[]', pair, true, class: "#{from} #{to}") %>
+                    <%= check_box_tag('pairs[]', pair, true, class: "#{pair.numerator} #{pair.denominator}") %>
                     <%= label_tag(pair, pair, class: 'badge badge-secondary') %>
                   </div>
               <% end %>
@@ -45,6 +44,11 @@
               <%= label_tag(cur.name, cur.name, class: 'badge badge-warning') %>
             </div>
         <% end %>
+      </div>
+
+      <div class="form-group ">
+        <%= label_tag('Coins', 'Coins for Exchange:', class: 'font-weight-bold col-sm-2 col-form-label') %>
+        <%= number_field_tag('coins', nil, min: 0, step: 1) %>
       </div>
 
       <div class="form-group ">

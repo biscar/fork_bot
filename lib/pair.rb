@@ -36,4 +36,15 @@ class Pair
     @bid_top ||= order_book['bid_top'].to_f
   end
 
+  class << self
+    def split(pair)
+      pair.split(/\/|_/)
+    end
+
+    def name_to_underscore(pair)
+      pair.to_s.gsub('/', '_')
+    end
+  end
+
+
 end
