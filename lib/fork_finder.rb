@@ -23,9 +23,9 @@ class ForkFinder
       next unless result
 
       if profit
-        forks << Fork.new(way, result, path_pairs) if result >= profit
+        forks << Fork.new(way: way, profit: result, pairs: path_pairs, coins: coins) if result >= profit
       else
-        forks << Fork.new(way, result, path_pairs)
+        forks << Fork.new(way: way, profit: result, pairs: path_pairs, coins: coins)
       end
     end
 
@@ -39,7 +39,7 @@ class ForkFinder
 
     result, path_pairs = calc_way(way, coins)
 
-    Fork.new(way, result, path_pairs)
+    Fork.new(way: way, profit: result, pairs: path_pairs, coins: coins)
   end
 
   private
@@ -62,7 +62,7 @@ class ForkFinder
           path_pairs << pair
 
           puts "#{current_coins} - #{cur}"
-
+          result = current_coins
           return [nil, nil] unless current_coins
         end
       end

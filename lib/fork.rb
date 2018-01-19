@@ -1,11 +1,12 @@
 class Fork
 
-  attr_reader :way, :profit, :pairs
+  attr_reader :way, :profit, :pairs, :coins
 
-  def initialize(way, profit, pairs)
-     @way = way
-     @profit = profit
-     @pairs = pairs
+  def initialize(params = {})
+     @way = params[:way]
+     @profit = params[:profit]
+     @pairs = params[:pairs]
+     @coins = params[:coins].zero? ? 1 : params[:coins]
   end
 
   def length
@@ -27,7 +28,7 @@ class Fork
   end
 
   def percentage_profit
-    ((profit - 1) * 100).round(10)
+    ((profit - coins) * 100).round(10)
   end
 
   def cycle?
