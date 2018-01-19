@@ -44,7 +44,23 @@ class Pair
     def name_to_underscore(pair)
       pair.to_s.gsub('/', '_')
     end
-  end
 
+    def parse_to_pairs(pairs, currencies)
+      pairs.map do |names|
+        first, last = Pair.split(names)
+
+        first_c = currencies.detect { |t| t.name == first }
+        last_c = currencies.detect { |t| t.name == last }
+
+        Pair.new(first_c, last_c)
+      end
+    end
+
+    def add_orders(pairs, orders)
+      pairs.each  do |pair|
+        pair.order_book = orders[pair.api_name]
+      end
+    end
+  end
 
 end
