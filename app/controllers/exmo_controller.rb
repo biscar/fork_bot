@@ -12,7 +12,7 @@ class ExmoController < ForkController
     start_currency = Currency.find_selected_cur(currencies, params[:start_currency])
     finish_selected = Currency.find_selected_cur(currencies, params[:finish_currency])
 
-    orders = Exmo.order_book(selected_pairs, limit: 1)
+    orders = Exmo.order_book(selected_pairs, limit: 50)
     pairs = Pair.parse_to_pairs(selected_pairs, currencies)
     Pair.add_orders(pairs, orders)
 
@@ -43,7 +43,7 @@ class ExmoController < ForkController
     currencies = Currency.parse_to_currencies(way.uniq)
     way = way.map { |name| Currency.find_selected_cur(currencies, name) }
 
-    orders = Exmo.order_book(fork_pairs, limit: 20)
+    orders = Exmo.order_book(fork_pairs, limit: 50)
     pairs = Pair.parse_to_pairs(fork_pairs, currencies)
     Pair.add_orders(pairs, orders)
 

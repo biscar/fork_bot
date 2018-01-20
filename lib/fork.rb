@@ -6,7 +6,7 @@ class Fork
      @way = params[:way]
      @profit = params[:profit]
      @pairs = params[:pairs]
-     @coins = params[:coins].zero? ? 1 : params[:coins]
+     @coins = params[:coins].to_f if params[:coins].present?
   end
 
   def length
@@ -28,7 +28,7 @@ class Fork
   end
 
   def percentage_profit
-    ((profit - coins) * 100).round(10)
+    (profit/(coins || 1) - 1).round(10)
   end
 
   def cycle?

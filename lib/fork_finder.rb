@@ -14,7 +14,7 @@ class ForkFinder
 
   def find(ways, params = {})
     forks = []
-    coins = params[:coins].to_f
+    coins = params[:coins]
     ways = exchanges_filter(ways)
 
     ways.each do |way|
@@ -35,7 +35,7 @@ class ForkFinder
   end
 
   def recalc(way, params = {})
-    coins = params[:coins].to_f
+    coins = params[:coins]
 
     result, path_pairs = calc_way(way, coins)
 
@@ -48,11 +48,11 @@ class ForkFinder
     result = 1.0
     last_cur = nil
     path_pairs = []
-    current_coins = coins.dup
+    current_coins = coins.to_f.dup
 
     way.each do |cur|
       if last_cur && cur
-        if coins.zero?
+        if coins.to_f.zero?
           rate, pair = Rates.find_rate(pairs, last_cur, cur)
           path_pairs << pair
 
