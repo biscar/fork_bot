@@ -5,11 +5,9 @@
     <td class="<%= profit_color_class(fork.percentage_profit) %>">
         <%= fork.cycle? ? number_to_percentage(fork.percentage_profit,  precision: 5) : fork.profit %>
     </td>
-
     <td>
-      <%= fork.profit %>
+      <%= fork.profit if fork.coins %>
     </td>
-
     <td >
         <button type="button"
                 onclick="Fork.show_details()"

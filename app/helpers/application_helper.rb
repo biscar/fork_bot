@@ -1,6 +1,8 @@
 module ApplicationHelper
 
   def profit_color_class(profit)
+    return '' unless profit
+
     if profit > 0
       'table-primary'
     elsif profit < 0

@@ -5,7 +5,7 @@ class Fork
   def initialize(params = {})
      @way = params[:way]
      @profit = params[:profit]
-     @pairs = params[:pairs]
+     @pairs = params[:pairs] || []
      @coins = params[:coins].to_f if params[:coins].present?
   end
 
@@ -18,9 +18,7 @@ class Fork
   end
 
   def details
-    pairs.map do |pair|
-      {name: pair.to_s, ask: pair.ask, bid: pair.bid}
-    end
+    pairs.map { |pair| {name: pair.to_s, ask: pair.ask, bid: pair.bid} }
   end
 
   def to_s
@@ -28,7 +26,7 @@ class Fork
   end
 
   def percentage_profit
-    (profit/(coins || 1) - 1).round(10)
+    (profit/(coins || 1) - 1).round(10) if profit
   end
 
   def cycle?

@@ -11,7 +11,6 @@ class ForkFinder
     @pairs = params[:pairs]
   end
 
-
   def find(ways, params = {})
     forks = []
     coins = params[:coins]
@@ -19,7 +18,6 @@ class ForkFinder
 
     ways.each do |way|
       result, path_pairs = calc_way(way, coins)
-
       next unless result
 
       if profit
@@ -61,7 +59,6 @@ class ForkFinder
           current_coins, pair = Rates.find_scope_coins(pairs, last_cur, cur, current_coins, fee)
           path_pairs << pair
 
-          puts "#{current_coins} - #{cur}"
           result = current_coins
           return [nil, nil] unless current_coins
         end
