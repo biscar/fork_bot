@@ -41,47 +41,44 @@ class Pair
     rest = coins.dup
     total_coins = 0
 
-    order_book['bid'].each do |cost, total_from, total_to|
+    order_book['bid'].each do |cost, total_from, _|
       cost = cost.to_f
       total_from = total_from.to_f
 
       if total_from >= rest
-        total_coins = (rest*cost*fee).round(8)
+        total_coins += (rest*cost*fee).round(8)
         rest = 0
       else
         total_coins += (total_from*cost*fee).round(8)
         rest = rest - total_from
       end
 
-      if rest <= 0
-        break
-      end
+      break if rest == 0
     end
 
-    rest <= 0 ? total_coins : nil
+    rest == 0 ? total_coins : nil
   end
 
   def calc_ask_coins(coins, fee)
-    rest = coins
+    rest = coins.dup
+    total_coins = 0
 
-    order_book['ask'].each do |cost,_, total_to|
+    order_book['ask'].each do |cost, total_from, _|
       cost = cost.to_f
-      total_to = total_to.to_f
+      total_from = total_from.to_f
 
-      if total_to >= coins
-        coins = ((coins/cost)*fee).round(8)
+      if total_from >= rest
+        total_coins += ((rest/cost)*fee).round(8)
         rest = 0
       else
-        coins = ((total_to/cost)*fee).round(8)
-        rest = rest - total_to
+        total_coins += ((total_from/cost)*fee).round(8)
+        rest = rest - total_from
       end
 
-      if rest <= 0
-        break
-      end
+      break if rest == 0
     end
 
-    rest <= 0 ? coins : nil
+    rest == 0 ? total_coins : nil
   end
 
 
