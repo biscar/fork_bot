@@ -21,7 +21,11 @@ class ForkFinder
       next unless result
 
       if profit
-        forks << Fork.new(way: way, profit: result, pairs: path_pairs, coins: coins) if result >= profit
+        if coins.blank?
+          forks << Fork.new(way: way, profit: result, pairs: path_pairs, coins: coins) if result >= profit
+        else
+          forks << Fork.new(way: way, profit: result, pairs: path_pairs, coins: coins) if result/coins.to_f >= profit
+        end
       else
         forks << Fork.new(way: way, profit: result, pairs: path_pairs, coins: coins)
       end

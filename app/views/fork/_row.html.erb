@@ -3,7 +3,7 @@
     <td><%= id %></td>
     <td><%= fork %></td>
     <td class="<%= profit_color_class(fork.percentage_profit) %>">
-        <%= fork.cycle? ? number_to_percentage(fork.percentage_profit,  precision: 5) : fork.profit %>
+        <%= number_to_percentage(fork.percentage_profit, precision: 3) if fork.cycle? %>
     </td>
     <td>
       <%= fork.profit if fork.coins %>

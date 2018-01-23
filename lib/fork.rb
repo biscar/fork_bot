@@ -26,7 +26,7 @@ class Fork
   end
 
   def percentage_profit
-    (profit/(coins || 1) - 1).round(10) if profit
+    ((profit/(coins || 1) - 1)*100) if profit
   end
 
   def cycle?
