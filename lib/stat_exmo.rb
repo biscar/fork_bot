@@ -1,14 +1,13 @@
 class StatExmo
-
-
   def start
-
     currencies = Currency.parse_to_currencies(Exmo.currency)
     pairs = Pair.parse_to_pairs(Exmo.pair_settings.keys, currencies)
     start_currency = Currency.find_selected_cur(currencies, 'USD')
 
-
-    100.times do |i|
+    i = 0
+    while true
+     begin
+      i += 1
       puts i
       orders = Exmo.order_book(pairs, limit: Exmo.limit_order_book)
       Pair.add_orders(pairs, orders)
@@ -25,10 +24,11 @@ class StatExmo
           file.write("\n")
         end
       end
+
+      rescue
+        puts 'error'
+      end
     end
-
-
-
     nil
   end
 
