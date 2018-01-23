@@ -49,9 +49,19 @@ class Exmo
       ApiBase.post(uri('pair_settings'))
     end
 
+    def commission
+      COMMISSION
+    end
+
+    def limit_order_book
+      LIMIT_ORDER_BOOK
+    end
+
     private
 
     HOST = 'https://api.exmo.com/v1'.freeze
+    COMMISSION = 0.2
+    LIMIT_ORDER_BOOK = 100
 
     def uri(path)
       URI([HOST, path].join('/'))
