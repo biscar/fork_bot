@@ -21,19 +21,19 @@ class Pair
   end
 
   def ask
-    @ask ||= order_book['ask_top'].to_f
+    @ask ||= bid_top
   end
 
   def bid
-    @bid ||= order_book['bid_top'].to_f
+    @bid ||= ask_top
   end
 
   def ask_top
-    @ask_top ||= order_book['ask_top'].to_f
+    @ask_top ||= order_book.ask_top.to_f
   end
 
   def bid_top
-    @bid_top ||= order_book['bid_top'].to_f
+    @bid_top ||= order_book.bid_top.to_f
   end
 
 
@@ -41,7 +41,7 @@ class Pair
     rest = coins.dup
     total_coins = 0
 
-    order_book['bid'].each do |cost, total_from, _|
+    order_book.bids.each do |cost, total_from|
       cost = cost.to_f
       total_from = total_from.to_f
 
@@ -63,7 +63,7 @@ class Pair
     rest = coins.dup
     total_coins = 0
 
-    order_book['ask'].each do |cost, total_from, _|
+    order_book.asks.each do |cost, total_from, _|
       cost = cost.to_f
       total_from = total_from.to_f
 

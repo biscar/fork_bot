@@ -13,10 +13,6 @@ class Fork
     way.count
   end
 
-  def pairs_ask_bid
-    pairs.map { |pair| "#{pair.to_s}(#{pair.ask_top}/ #{pair.bid_top})" }.join('->')
-  end
-
   def details
     pairs.map { |pair| {name: pair.to_s, ask: pair.ask, bid: pair.bid} }
   end
