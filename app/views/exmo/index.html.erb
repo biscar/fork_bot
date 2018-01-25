@@ -3,28 +3,7 @@
     <form id="currencies" action="/exmo/find_forks" data-remote="true">
       <%= render partial: 'fork/pairs', locals: {pairs: @pairs} %>
       <%= render partial: 'fork/currencies', locals: {currencies: @currencies} %>
-
-      <div class="form-group ">
-        <%= label_tag('Coins', 'Coins for Exchange:', class: 'font-weight-bold col-sm-2 col-form-label') %>
-        <%= number_field_tag('coins', nil, min: 0, step: 1) %>
-      </div>
-
-      <div class="form-group ">
-        <%= label_tag('Profit', 'Profit %:', class: 'font-weight-bold col-sm-2 col-form-label') %>
-        <%= number_field_tag('profit', 0, min: -50, max: 100) %>
-      </div>
-
-      <div class="form-group ">
-        <%= label_tag('Exchanges', 'Exchanges from:', class: 'font-weight-bold col-sm-2 col-form-label') %>
-        <%= number_field_tag('exchanges_from', nil, min: 0, max: 50, step: 1) %>
-        <%= label_tag('To', 'To', class: 'font-weight-bold') %>
-        <%= number_field_tag('exchanges_to', nil, min: 1, max: 50, step: 1) %>
-      </div>
-
-      <div class="form-group ">
-        <%= label_tag('limit', 'Limit:', class: 'font-weight-bold col-sm-2 col-form-label') %>
-        <%= number_field_tag('limit', 10, step: 1) %>
-      </div>
+      <%= render partial: 'fork/settings', locals: {currencies: @currencies} %>
 
       <button type="submit" onclick="Fork.submit_form();" class="btn btn-primary">Scan</button>
     </form>

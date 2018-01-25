@@ -3,7 +3,9 @@
     <form id="currencies" action="/exmo/find_forks" data-remote="true">
       <%= render partial: 'fork/pairs', locals: {pairs: @pairs} %>
       <%= render partial: 'fork/currencies', locals: {currencies: @currencies} %>
+      <%= render partial: 'fork/settings', locals: {currencies: @currencies} %>
 
+      <button type="submit" onclick="Fork.submit_form();" class="btn btn-primary">Scan</button>
     </form>
 
   </div>
