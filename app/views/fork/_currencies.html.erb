@@ -1,29 +1,46 @@
 <div id="selected_currencies" class="form-group">
-  <%= label_tag('Selected Currencies', 'Selected Currencies:  ', class: 'font-weight-bold col-sm-2 col-form-label') %>
-  <% currencies.each do |cur| %>
-      <div class="form-check form-check-inline">
-        <%= check_box_tag('currencies[]', cur.name, true) %>
-        <%= label_tag(cur.name, cur.name, class: 'badge badge-info') %>
+  <div class="row">
+      <div class="col-md-1">
+        <%= label_tag('Selected Currencies', 'Selected Currencies:  ', class: 'font-weight-bold col-sm-2 col-form-label') %>
       </div>
-  <% end %>
+
+      <div class="col-md-11">
+        <% currencies.each do |cur| %>
+            <div class="form-check form-check-inline">
+              <%= check_box_tag('currencies[]', cur.name, true) %>
+              <%= label_tag(cur.name, cur.name, class: 'badge badge-info') %>
+            </div>
+        <% end %>
+      </div>
+    </div>
 </div>
 
-<div class="form-group">
-  <%= label_tag('Start Currency', 'Start Currency:', class: 'font-weight-bold col-sm-2 col-form-label') %>
-  <% currencies.each do |cur| %>
-      <div class="form-check form-check-inline">
-        <%= radio_button_tag('start_currency', cur.name, false) %>
-        <%= label_tag(cur.name, cur.name, class: 'badge badge-success') %>
-      </div>
-  <% end %>
+<div class="row form-group">
+  <div class="col-md-1">
+    <%= label_tag('Start Currency', 'Start Currency:', class: 'font-weight-bold col-sm-2 col-form-label') %>
+  </div>
+
+  <div class="col-md-11">
+    <% currencies.each do |cur| %>
+        <div class="form-check form-check-inline">
+          <%= radio_button_tag('start_currency', cur.name, false) %>
+          <%= label_tag(cur.name, cur.name, class: 'badge badge-success') %>
+        </div>
+    <% end %>
+  </div>
 </div>
 
-<div class="form-group">
-  <%= label_tag('Finish Currency', 'Finish Currency:', class: 'font-weight-bold col-sm-2 col-form-label') %>
-  <% currencies.each do |cur| %>
-      <div class="form-check form-check-inline">
-        <%= radio_button_tag('finish_currency', cur.name, false) %>
-        <%= label_tag(cur.name, cur.name, class: 'badge badge-warning') %>
-      </div>
-  <% end %>
+<div class="row form-group">
+  <div class="col-md-1">
+    <%= label_tag('Finish Currency', 'Finish Currency:', class: 'font-weight-bold col-sm-2 col-form-label') %>
+  </div>
+
+  <div class="col-md-11">
+    <% currencies.each do |cur| %>
+        <div class="form-check form-check-inline">
+          <%= radio_button_tag('finish_currency', cur.name, false) %>
+          <%= label_tag(cur.name, cur.name, class: 'badge badge-warning') %>
+        </div>
+    <% end %>
+  </div>
 </div>
