@@ -42,24 +42,28 @@
     });
   };
 
-  $(function() {
-    $('#currencies').submit(function() {
-      $('#currencies button').prop('disabled', true);
-      $('#forks table').addClass('disabledContent');
-      $('#details table').html('');
+  Fork.submit_form = function () {
+    var form = $('#currencies');
 
-      var valuesToSubmit = $(this).serialize();
-      $.ajax({
-        type: "GET",
-        url: '/exmo/find_forks',
-        data: valuesToSubmit
-      }).success(function(html){
-        $('#forks').html(html);
-      }).always(function(){
-        $('#currencies button').prop('disabled', false);
-      });
-      return false;
+    $('#currencies button').prop('disabled', true);
+    $('#forks table').addClass('disabledContent');
+    $('#details table').html('');
+
+    var valuesToSubmit = $(form).serialize();
+    $.ajax({
+      type: "GET",
+      url: '/exmo/find_forks',
+      data: valuesToSubmit
+    }).success(function(html){
+      $('#forks').html(html);
+    }).always(function(){
+      $('#currencies button').prop('disabled', false);
     });
+    return false;
+  };
+
+
+ $(document).on('turbolinks:load', function() {
 
     $("#selected_currencies input").change(function() {
       var cur = $(this).val();

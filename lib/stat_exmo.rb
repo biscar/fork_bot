@@ -1,8 +1,9 @@
 class StatExmo
+
   def start
     currencies = Currency.parse_to_currencies(Exmo.currency)
     pairs = Pair.parse_to_pairs(Exmo.pair_settings.keys, currencies)
-    start_currency = Currency.find_selected_cur(currencies, 'USD')
+    start_currency = Currency.find_selected_cur(currencies, 'XRP')
 
     i = 0
     while true

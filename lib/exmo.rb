@@ -61,7 +61,7 @@ class Exmo
 
     HOST = 'https://api.exmo.com/v1'.freeze
     COMMISSION = 0.2
-    LIMIT_ORDER_BOOK = 100
+    LIMIT_ORDER_BOOK = 500
 
     def uri(path)
       URI([HOST, path].join('/'))
