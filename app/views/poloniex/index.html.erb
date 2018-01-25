@@ -1,0 +1,10 @@
+<div class="container-fluid m-3">
+  <div class="row">
+    <form id="currencies" action="/exmo/find_forks" data-remote="true">
+      <%= render partial: 'fork/pairs', locals: {pairs: @pairs} %>
+      <%= render partial: 'fork/currencies', locals: {currencies: @currencies} %>
+
+    </form>
+
+  </div>
+</div>

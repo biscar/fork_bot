@@ -5,4 +5,10 @@ class ApiBase
     JSON.parse(response.body)
   end
 
+  def self.get(uri)
+    response = Net::HTTP.get(uri)
+
+    JSON.parse(response)
+  end
+
 end

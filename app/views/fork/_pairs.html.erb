@@ -1,0 +1,14 @@
+<div id="pairs" class="form-group">
+  <%= label_tag('Selected Pairs', 'Selected Pairs:  ', class: 'font-weight-bold') %>
+  <% pairs.group_by(&:numerator).each do |currency, pairs| %>
+      <div class="form-group">
+        <%= label_tag(currency, currency.to_s + ':  ', class: 'font-weight-bold col-sm-2 col-form-label badge badge-light') %>
+        <% pairs.each do |pair| %>
+            <div class="form-check form-check-inline">
+              <%= check_box_tag('pairs[]', pair, true, class: "#{pair.numerator} #{pair.denominator}") %>
+              <%= label_tag(pair, pair, class: 'badge badge-secondary') %>
+            </div>
+        <% end %>
+      </div>
+  <% end %>
+</div>

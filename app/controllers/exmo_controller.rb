@@ -1,4 +1,4 @@
-class ExmoController < ForkController
+class ExmoController < ApplicationController
 
   def index
     @currencies = Currency.parse_to_currencies(Exmo.currency)
