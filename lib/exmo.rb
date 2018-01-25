@@ -57,6 +57,12 @@ class Exmo
       LIMIT_ORDER_BOOK
     end
 
+    def add_orders(pairs, orders)
+      pairs.each  do |pair|
+        pair.order_book = orders[pair.api_name]
+      end
+    end
+
     private
 
     HOST = 'https://api.exmo.com/v1'.freeze

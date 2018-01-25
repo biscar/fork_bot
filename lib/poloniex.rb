@@ -14,9 +14,23 @@ class Poloniex
       ApiBase.get(public_uri(public_command('returnCurrencies')))
     end
 
+    def order_book(params)
+      ApiBase.get(public_uri(public_command('returnOrderBook').merge(params)))
+    end
+
+    def limit_order_book
+      LIMIT_ORDER_BOOK
+    end
+
+    def commission
+      COMMISSION
+    end
+
     private
 
     PUBLIC_HOST = 'https://poloniex.com/public'.freeze
+    COMMISSION = 0.2
+    LIMIT_ORDER_BOOK = 10
 
     def public_uri(command)
       URI("#{PUBLIC_HOST}?#{command.to_param}")

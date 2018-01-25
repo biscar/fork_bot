@@ -102,11 +102,6 @@ class Pair
       end
     end
 
-    def add_orders(pairs, orders)
-      pairs.each  do |pair|
-        pair.order_book = orders[pair.api_name]
-      end
-    end
   end
 
 end

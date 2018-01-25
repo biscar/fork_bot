@@ -14,7 +14,7 @@ class ExmoController < ApplicationController
 
     orders = Exmo.order_book(selected_pairs, limit: Exmo.limit_order_book)
     pairs = Pair.parse_to_pairs(selected_pairs, currencies)
-    Pair.add_orders(pairs, orders)
+    Exmo.add_orders(pairs, orders)
 
     graph = Graph.new(currencies, pairs)
     ways = graph.ways(start_currency, finish_selected)
@@ -45,7 +45,7 @@ class ExmoController < ApplicationController
 
     orders = Exmo.order_book(fork_pairs, limit: Exmo.limit_order_book)
     pairs = Pair.parse_to_pairs(fork_pairs, currencies)
-    Pair.add_orders(pairs, orders)
+    Exmo.add_orders(pairs, orders)
 
     forkFinder = ForkFinder.new(commission: Exmo.commission, pairs: pairs)
     fork = forkFinder.recalc(way, coins: params[:coins])

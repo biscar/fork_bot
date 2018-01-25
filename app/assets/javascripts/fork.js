@@ -42,7 +42,7 @@
     });
   };
 
-  Fork.submit_form = function () {
+  Fork.submit_form = function(url) {
     var form = $('#currencies');
 
     $('#currencies button').prop('disabled', true);
@@ -52,7 +52,7 @@
     var valuesToSubmit = $(form).serialize();
     $.ajax({
       type: "GET",
-      url: '/exmo/find_forks',
+      url: url,
       data: valuesToSubmit
     }).success(function(html){
       $('#forks').html(html);

@@ -5,17 +5,10 @@
       <%= render partial: 'fork/currencies', locals: {currencies: @currencies} %>
       <%= render partial: 'fork/settings', locals: {currencies: @currencies} %>
 
-      <button type="submit" onclick="Fork.submit_form();" class="btn btn-primary">Scan</button>
+      <button type="submit" onclick="Fork.submit_form('/exmo/find_forks');" class="btn btn-primary">Scan</button>
     </form>
   </div>
 
-  <div class="row mt-5">
-    <div id="forks" class="col-md-6">
-      <%= render partial: 'fork/forks', locals: {forks: []}%>
-    </div>
-    <div id="details" class="col-md-6">
+  <%= render partial: 'fork/forks_container' %>
 
-    </div>
-
-  </div>
 </div>

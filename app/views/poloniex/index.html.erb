@@ -1,12 +1,13 @@
 <div class="container-fluid m-3">
   <div class="row">
-    <form id="currencies" action="/exmo/find_forks" data-remote="true">
+    <form id="currencies" action="/poloniex/find_forks" data-remote="true">
       <%= render partial: 'fork/pairs', locals: {pairs: @pairs} %>
       <%= render partial: 'fork/currencies', locals: {currencies: @currencies} %>
       <%= render partial: 'fork/settings', locals: {currencies: @currencies} %>
 
-      <button type="submit" onclick="Fork.submit_form();" class="btn btn-primary">Scan</button>
+      <button type="submit" onclick="Fork.submit_form('/poloniex/find_forks');" class="btn btn-primary">Scan</button>
     </form>
-
   </div>
+
+  <%= render partial: 'fork/forks_container' %>
 </div>

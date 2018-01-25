@@ -15,4 +15,7 @@ Rails.application.routes.draw do
   get 'exmo/find_forks'
   post 'exmo/show_details'
   post 'exmo/refresh_fork'
+
+  get 'poloniex/find_forks'
+
 end
