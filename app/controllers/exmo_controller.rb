@@ -38,7 +38,7 @@ class ExmoController < ApplicationController
   end
 
   def refresh_fork
-    fork_pairs = get_fork_pairs(params[:details].to_hash)
+    fork_pairs = Pair.get_fork_pairs(params[:details].to_hash)
     way = params[:way].to_hash.values.map { |w| w['name'] }
     currencies = Currency.parse_to_currencies(way.uniq)
     way = way.map { |name| Currency.find_selected_cur(currencies, name) }
@@ -51,12 +51,6 @@ class ExmoController < ApplicationController
     fork = forkFinder.recalc(way, coins: params[:coins])
 
     render partial: 'fork/row', locals: {fork: fork, id: params[:id]}, layout: false
-  end
-
-  private
-
-  def get_fork_pairs(details)
-    details.values.map { |p| p['name'].gsub!('/', '_') }.uniq
   end
 
 end

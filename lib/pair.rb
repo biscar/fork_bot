@@ -36,7 +36,6 @@ class Pair
     @bid_top ||= order_book.bid_top.to_f
   end
 
-
   def calc_bid_coins(coins, fee)
     rest = coins.dup
     total_coins = 0
@@ -100,6 +99,10 @@ class Pair
 
         Pair.new(first_c, last_c)
       end
+    end
+
+    def get_fork_pairs(details)
+      details.values.map { |p| p['name'].gsub!('/', '_') }.uniq
     end
 
   end

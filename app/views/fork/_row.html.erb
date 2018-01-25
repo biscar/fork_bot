@@ -10,14 +10,14 @@
     </td>
     <td >
         <button type="button"
-                onclick="Fork.show_details()"
+                onclick="Fork.show_details(<%= show_details_url %>)"
                 class="btn btn-link details">
             Details
         </button>
 
         <button type="button" aria-hidden="true" title="Refresh"
                 data-details="<%= fork.details.to_json.to_s %>"
-                onclick="Fork.refresh_fork()"
+                onclick="Fork.refresh_fork(<%= refresh_fork_url %>, <%= show_details_url %>)"
                 class="btn btn-link fa fa-refresh">
         </button>
     </td>

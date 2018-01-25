@@ -1,19 +1,19 @@
 ( function(Fork, $) {
 
-  Fork.show_details = function() {
+  Fork.show_details = function(url) {
     var fork = $(event.target).parents('tr');
     var details = fork.data('details');
 
     $.ajax({
       type: "POST",
-      url: '/exmo/show_details',
+      url: url,
       data: {details: details}
     }).success(function(html){
       $('#details').html(html);
     });
   };
 
-  Fork.refresh_fork = function() {
+  Fork.refresh_fork = function(url, url2) {
     var fork = $(event.target).parents('tr');
     fork.addClass('disabledContent');
     $('#details table').addClass('disabledContent');
@@ -27,14 +27,14 @@
 
     $.ajax({
       type: "POST",
-      url: '/exmo/refresh_fork',
+      url: url,
       data: {details: details, id: id, way: way, coins: coins}
     }).success(function(html){
       fork.replaceWith(html);
 
       $.ajax({
         type: "POST",
-        url: '/exmo/show_details',
+        url: url2,
         data: {details: fork.data('details')}
       }).success(function(html){
         $('#details').html(html);
