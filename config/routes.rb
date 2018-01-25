@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'poloniex/index'
+
   get 'exmo/index'
 
   get 'fork/index'
