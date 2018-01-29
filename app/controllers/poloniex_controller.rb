@@ -1,14 +1,14 @@
 class PoloniexController < ForkController
 
   def index
-    @currencies = Currency.parse_to_currencies(currencies)
+    @currencies = Currency.parse_to_currencies(currencies(Poloniex.ticker.keys))
     @pairs = Pair.parse_to_pairs(Poloniex.ticker.keys, @currencies)
   end
 
   def find_forks
     selected_pairs = params[:pairs]
 
-    currencies = Currency.parse_to_currencies(params[:currencies])
+    currencies = Currency.parse_to_currencies(currencies(selected_pairs))
     start_currency = Currency.find_selected_cur(currencies, params[:start_currency])
     finish_selected = Currency.find_selected_cur(currencies, params[:finish_currency])
 
@@ -53,10 +53,6 @@ class PoloniexController < ForkController
     render partial: 'fork/row', locals: {fork: fork, id: params[:id]}, layout: false
   end
 
-  private
 
-  def currencies
-    Poloniex.ticker.keys.map { |pair| Pair.split(pair) }.flatten.uniq
-  end
 
 end
