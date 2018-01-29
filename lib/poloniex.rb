@@ -29,7 +29,7 @@ class Poloniex
     def add_orders(pairs, orders)
       pairs.each do |pair|
         ob = orders[pair.api_name]
-        order_book = OrderBook.new(asks: ob['asks'], bids: ob['bids'], reverse_calc: true)
+        order_book = OrderBook.new(asks: ob['asks'], bids: ob['bids'])
         pair.order_book = order_book
       end
     end

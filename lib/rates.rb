@@ -46,9 +46,14 @@ class Rates
       direct_pair = pairs.detect { |pair| pair.numerator == from_cur && pair.denominator == to_cur }
       undirect_pair = pairs.detect { |pair| pair.denominator == from_cur && pair.numerator == to_cur } unless direct_pair
 
-      [direct_pair, undirect_pair]
-    end
+      reversed = (direct_pair || undirect_pair).reversed
 
+      if reversed
+        [undirect_pair, direct_pair]
+      else
+        [direct_pair, undirect_pair]
+      end
+    end
 
   end
 

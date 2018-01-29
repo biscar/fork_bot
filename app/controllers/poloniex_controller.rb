@@ -13,7 +13,7 @@ class PoloniexController < ForkController
     finish_selected = Currency.find_selected_cur(currencies, params[:finish_currency])
 
     orders = Poloniex.order_book({currencyPair: 'ALL', depth: Poloniex.limit_order_book})
-    pairs = Pair.parse_to_pairs(selected_pairs, currencies)
+    pairs = Pair.parse_to_pairs(selected_pairs, currencies, reversed: true)
     Poloniex.add_orders(pairs, orders)
 
     graph = Graph.new(currencies, pairs)
@@ -44,7 +44,7 @@ class PoloniexController < ForkController
     way = way.map { |name| Currency.find_selected_cur(currencies, name) }
 
     orders = Poloniex.order_book({currencyPair: 'ALL', depth: Poloniex.limit_order_book})
-    pairs = Pair.parse_to_pairs(fork_pairs, currencies)
+    pairs = Pair.parse_to_pairs(fork_pairs, currencies, reversed: true)
     Poloniex.add_orders(pairs, orders)
 
     forkFinder = ForkFinder.new(commission: Poloniex.commission, pairs: pairs)
