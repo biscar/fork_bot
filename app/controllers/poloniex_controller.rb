@@ -5,7 +5,6 @@ class PoloniexController < ForkController
     @pairs = Pair.parse_to_pairs(Poloniex.ticker.keys, @currencies)
   end
 
-
   def find_forks
     selected_pairs = params[:pairs]
 

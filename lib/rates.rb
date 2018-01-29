@@ -22,9 +22,9 @@ class Rates
      direct_pair, undirect_pair = detect_pair(pairs, from_cur, to_cur)
 
      result = if direct_pair
-        [direct_pair.bid_top, direct_pair]
+        [direct_pair.order_book.calc_bid(1, direct_pair.bid_top), direct_pair]
       elsif undirect_pair
-        [(1/undirect_pair.ask_top).round(8), undirect_pair]
+        [undirect_pair.order_book.calc_ask(1, undirect_pair.ask_top).round(8), undirect_pair]
       end
 
       result

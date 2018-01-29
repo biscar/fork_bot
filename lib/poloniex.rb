@@ -29,7 +29,7 @@ class Poloniex
     def add_orders(pairs, orders)
       pairs.each do |pair|
         ob = orders[pair.api_name]
-        order_book = OrderBook.new(asks: ob['asks'], bids: ob['bids'])
+        order_book = OrderBook.new(asks: ob['asks'], bids: ob['bids'], reverse_calc: true)
         pair.order_book = order_book
       end
     end
@@ -38,7 +38,7 @@ class Poloniex
 
     PUBLIC_HOST = 'https://poloniex.com/public'.freeze
     COMMISSION = 0.2
-    LIMIT_ORDER_BOOK = 10
+    LIMIT_ORDER_BOOK = 500
 
     def public_uri(command)
       URI("#{PUBLIC_HOST}?#{command.to_param}")

@@ -64,7 +64,6 @@
 
 
  $(document).on('turbolinks:load', function() {
-
     $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
 
     $("#selected_currencies input").change(function() {
