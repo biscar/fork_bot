@@ -5,7 +5,6 @@ class OrderBook
   def initialize(params = {})
     @asks = params[:asks]
     @bids = params[:bids]
-    @reverse_calc = params.fetch(:reverse_calc, false)
   end
 
   def ask_top
@@ -14,14 +13,6 @@ class OrderBook
 
   def bid_top
     bids.first.try(&:first)
-  end
-
-  def calc_ask(a, b)
-    reverse_calc ? a*b : a/b
-  end
-
-  def calc_bid(a, b)
-    reverse_calc ? a/b : a*b
   end
 
 end

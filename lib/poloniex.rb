@@ -50,7 +50,4 @@ class Poloniex
 
   end
 
-
-
-
 end

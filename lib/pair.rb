@@ -46,10 +46,10 @@ class Pair
       total_from = total_from.to_f
 
       if total_from >= rest
-        total_coins += (order_book.calc_bid(rest, cost)*fee).round(8)
+        total_coins += (rest*cost*fee).round(8)
         rest = 0
       else
-        total_coins += (order_book.calc_bid(total_from, cost)*fee).round(8)
+        total_coins += (total_from*cost*fee).round(8)
         rest = rest - total_from
       end
 
@@ -68,10 +68,10 @@ class Pair
       total_from = total_from.to_f
 
       if total_from >= rest
-        total_coins += ((order_book.calc_ask(rest, cost))*fee).round(8)
+        total_coins += ((rest/cost)*fee).round(8)
         rest = 0
       else
-        total_coins += ((order_book.calc_ask(total_from, cost))*fee).round(8)
+        total_coins += ((total_from/cost)*fee).round(8)
         rest = rest - total_from
       end
 
