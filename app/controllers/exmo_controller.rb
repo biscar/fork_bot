@@ -19,8 +19,7 @@ class ExmoController < ApplicationController
     graph = Graph.new(currencies, pairs)
     ways = graph.ways(start_currency, finish_selected)
 
-    forkFinder = ForkFinder.new(commission: Exmo.commission,
-                                pairs: pairs,
+    forkFinder = ForkFinder.new(pairs: pairs,
                                 profit_percent: params[:profit],
                                 exchanges_from: params[:exchanges_from],
                                 limit: params[:limit],
@@ -47,7 +46,7 @@ class ExmoController < ApplicationController
     pairs = Pair.parse_to_pairs(fork_pairs, currencies)
     Exmo.add_orders(pairs, orders)
 
-    forkFinder = ForkFinder.new(commission: Exmo.commission, pairs: pairs)
+    forkFinder = ForkFinder.new(pairs: pairs)
     fork = forkFinder.recalc(way, coins: params[:coins])
 
     render partial: 'fork/row', locals: {fork: fork, id: params[:id]}, layout: false

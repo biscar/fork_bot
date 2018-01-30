@@ -37,50 +37,17 @@ class Pair
     @bid_top ||= order_book.bid_top.to_f
   end
 
-  def calc_bid_coins(coins, fee)
-    rest = coins.dup
-    total_coins = 0
-
-    order_book.bids.each do |cost, total_from|
-      cost = cost.to_f
-      total_from = total_from.to_f
-
-      if total_from >= rest
-        total_coins += (rest*cost*fee).round(8)
-        rest = 0
-      else
-        total_coins += (total_from*cost*fee).round(8)
-        rest = rest - total_from
-      end
-
-      break if rest == 0
-    end
-
-    rest == 0 ? total_coins : nil
+  def calc_bid_coins(coins)
+    order_book.calc_bid_by_coins(coins)
   end
 
-  def calc_ask_coins(coins, fee)
-    rest = coins.dup
-    total_coins = 0
-
-    order_book.asks.each do |cost, total_from, _|
-      cost = cost.to_f
-      total_from = total_from.to_f
-
-      if total_from >= rest
-        total_coins += ((rest/cost)*fee).round(8)
-        rest = 0
-      else
-        total_coins += ((total_from/cost)*fee).round(8)
-        rest = rest - total_from
-      end
-
-      break if rest == 0
-    end
-
-    rest == 0 ? total_coins : nil
+  def calc_ask_coins(coins)
+    order_book.calc_ask_by_coins(coins)
   end
 
+  def fee
+    order_book.fee
+  end
 
   class << self
     def split(pair)

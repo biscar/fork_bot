@@ -1,9 +1,8 @@
 class ForkFinder
 
-  attr_reader :commission, :profit_percent, :exchanges_from, :exchanges_to, :limit, :pairs
+  attr_reader :profit_percent, :exchanges_from, :exchanges_to, :limit, :pairs
 
   def initialize(params = {})
-    @commission = params[:commission].to_f
     @profit_percent = params[:profit_percent]
     @exchanges_from = params[:exchanges_from].to_i
     @exchanges_to = params[:exchanges_to].to_i
@@ -58,9 +57,9 @@ class ForkFinder
           rate, pair = Rates.find_rate(pairs, last_cur, cur)
           path_pairs << pair
 
-          result = (result*rate*fee).round(8)
+          result = (result*rate).round(8)
         else
-          current_coins, pair = Rates.find_scope_coins(pairs, last_cur, cur, current_coins, fee)
+          current_coins, pair = Rates.find_scope_coins(pairs, last_cur, cur, current_coins)
           path_pairs << pair
 
           result = current_coins
@@ -86,10 +85,6 @@ class ForkFinder
         ways.count <= exchanges_to
       end
     end
-  end
-
-  def fee
-    @fee ||= (100 - commission)/100
   end
 
   def profit

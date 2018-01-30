@@ -19,8 +19,7 @@ class PoloniexController < ForkController
     graph = Graph.new(currencies, pairs)
     ways = graph.ways(start_currency, finish_selected)
 
-    forkFinder = ForkFinder.new(commission: Poloniex.commission,
-                                pairs: pairs,
+    forkFinder = ForkFinder.new(pairs: pairs,
                                 profit_percent: params[:profit],
                                 exchanges_from: params[:exchanges_from],
                                 limit: params[:limit],
@@ -47,7 +46,7 @@ class PoloniexController < ForkController
     pairs = Pair.parse_to_pairs(fork_pairs, currencies, reversed: true)
     Poloniex.add_orders(pairs, orders)
 
-    forkFinder = ForkFinder.new(commission: Poloniex.commission, pairs: pairs)
+    forkFinder = ForkFinder.new(pairs: pairs)
     fork = forkFinder.recalc(way, coins: params[:coins])
 
     render partial: 'fork/row', locals: {fork: fork, id: params[:id]}, layout: false

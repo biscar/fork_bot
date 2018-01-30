@@ -9,11 +9,11 @@ class Rates
       detect_rate(pairs, from_cur, to_cur)
     end
 
-    def find_scope_coins(pairs, from_cur, to_cur, coins, fee)
+    def find_scope_coins(pairs, from_cur, to_cur, coins)
       return coins,to_cur if from_cur.blank? || to_cur.blank?
       return coins,to_cur if from_cur == to_cur
 
-      detect_scope_coins(pairs, from_cur, to_cur, coins, fee)
+      detect_scope_coins(pairs, from_cur, to_cur, coins)
     end
 
     private
@@ -22,22 +22,22 @@ class Rates
      direct_pair, undirect_pair = detect_pair(pairs, from_cur, to_cur)
 
      result = if direct_pair
-        [direct_pair.bid_top, direct_pair]
+        [direct_pair.bid_top*direct_pair.fee, direct_pair]
       elsif undirect_pair
-        [(1/undirect_pair.ask_top).round(8), undirect_pair]
+        [((1/undirect_pair.ask_top)*undirect_pair.fee).round(8), undirect_pair]
       end
 
       result
     end
 
-    def detect_scope_coins(pairs, from_cur, to_cur, coins, fee)
+    def detect_scope_coins(pairs, from_cur, to_cur, coins)
       direct_pair, undirect_pair = detect_pair(pairs, from_cur, to_cur)
 
       if direct_pair
-        coins = direct_pair.calc_bid_coins(coins, fee)
+        coins = direct_pair.calc_bid_coins(coins)
         [coins, direct_pair]
       elsif undirect_pair
-        coins = undirect_pair.calc_ask_coins(coins, fee)
+        coins = undirect_pair.calc_ask_coins(coins)
         [coins, undirect_pair]
       end
     end

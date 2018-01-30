@@ -60,7 +60,7 @@ class Exmo
     def add_orders(pairs, orders)
       pairs.each do |pair|
         ob = orders[pair.api_name]
-        order_book = OrderBook.new(asks: ob['ask'], bids: ob['bid'])
+        order_book = OrderBook.new(asks: ob['ask'], bids: ob['bid'], commission: commission)
         pair.order_book = order_book
       end
     end
